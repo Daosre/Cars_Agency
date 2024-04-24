@@ -7,6 +7,7 @@ const pool = mysql.createPool({
   database: "Cars_Agency",
   password: "1234",
   waitForConnections: true,
+  multipleStatements: true
 });
 
 module.exports = { pool };
