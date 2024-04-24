@@ -36,24 +36,22 @@ async function Log_User (req,res) {
     }
 
         const email = req.body.email
-        const sql = `SELECT email FROM User VALUES (?)`
+        const sql = `SELECT * FROM User where email=?`
         const values = [email]
         const [rows] = await pool.query(sql, values)
-        res.json(rows)
 
-        const isValidPassword = bcrypt.compareSync(req.body.password, User.password)
-        
+        const isValidPassword = bcrypt.compareSync(req.body.password, rows[0].password)
         if(!isValidPassword) {
             res.status(401).json({ error: 'Password Wrong'})
         } else {
             const token = jwt.sign(
                 {
-                    first_name: User.first_name,
-                    last_name: User.last_name,
-                    email: User.email,
-                    role: User.role,
-                    id: User_id,
-                    gdpr: new Date(User.gdpr).toLocaleDateString('fr')
+                    first_name: rows[0].first_name,
+                    last_name: rows[0].last_name,
+                    email: rows[0].email,
+                    role: rows[0].role,
+                    id: rows[0].id,
+                    gdpr: new Date(rows[0].gdpr).toLocaleDateString('fr')
                 },
                 process.env.MA_SECRETKEY,
                 { expiresIn: '10d'}
