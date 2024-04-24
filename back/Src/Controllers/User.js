@@ -31,18 +31,18 @@ const Add_User = async (req, res) => {
 
 async function Log_User (req,res) {
     if(!req.body.email || !req.body.password) {
-        res.status(400).json({ error: 'Invalid Mail / Password'})
+        res.status(400).json({ error: 'Invalid Credits'})
         return
     }
-    if(!User) {
-            res.status(401).json({ error: "Invalid credits"})
-        }
 
-        const email = req.email
-        const sql = `SELECT * FROM email VALUES (${email})`
-        const [rows] = await pool.execute(sql)
+        const email = req.body.email
+        const sql = `SELECT email FROM User VALUES (?)`
+        const values = [email]
+        const [rows] = await pool.query(sql, values)
         res.json(rows)
+
         const isValidPassword = bcrypt.compareSync(req.body.password, User.password)
+        
         if(!isValidPassword) {
             res.status(401).json({ error: 'Password Wrong'})
         } else {
