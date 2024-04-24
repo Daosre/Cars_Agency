@@ -28,4 +28,37 @@ const Add_User = async (req, res) => {
         console.log(err.stack)
     }
 }
-module.exports = { Add_User }
+
+async function Log_User (req,res) {
+    if(!req.body.email || !req.body.password) {
+        res.status(400).json({ error: 'Invalid Mail / Password'})
+        return
+    }
+    if(!User) {
+            res.status(401).json({ error: "Invalid credits"})
+        }
+
+        const email = req.email
+        const sql = `SELECT * FROM email VALUES (${email})`
+        const [rows] = await pool.execute(sql)
+        res.json(rows)
+        const isValidPassword = bcrypt.compareSync(req.body.password, User.password)
+        if(!isValidPassword) {
+            res.status(401).json({ error: 'Password Wrong'})
+        } else {
+            const token = jwt.sign(
+                {
+                    first_name: User.first_name,
+                    last_name: User.last_name,
+                    email: User.email,
+                    role: User.role,
+                    id: User_id,
+                    gdpr: new Date(User.gdpr).toLocaleDateString('fr')
+                },
+                process.env.MA_SECRETKEY,
+                { expiresIn: '10d'}
+            )
+            res.status(200).json({ jwt: token})
+        }
+}
+module.exports = { Add_User, Log_User }
