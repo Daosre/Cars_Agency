@@ -26,7 +26,7 @@ const Add_User = async (req, res) => {
             res.status(400).json({ error: 'Invalid credit'})
         } else {
             const passwordhash = await bcrypt.hash(password, 10)
-            const sqlInsertRequest = `INSERT INTO User VALUES (NULL,?,?,?,?)`
+            const sqlInsertRequest = `INSERT INTO User(first_name, last_name, email, password) VALUES (?,?,?,?)`
             const insertValues = [first_name, last_name, email, passwordhash]
             const [result] = await pool.execute(sqlInsertRequest, insertValues)
             if (result.affectedRows > 0) {
@@ -41,18 +41,6 @@ const Add_User = async (req, res) => {
         console.log(err.stack)
         res.status(500).json({ msg: 'Erreur serveur'})
     }
-    // try {
-    //     const first_name = req.first_name
-    //     const last_name = req.last_name
-    //     const email = req.email
-    //     passwordhash
-    //     const sql = `INSERT INTO User(first_name, last_name, email, password) VALUES (?,?,?,?)`
-    //     const values = [ first_name, last_name, email, passwordhash]
-    //     const [rows] = await pool.query(sql, values)
-    //     res.json(rows)
-    // } catch (err) {
-    //     console.log(err.stack)
-    // }
 }
 
 async function Log_User (req,res) {
