@@ -13,20 +13,46 @@ const Add_User = async (req, res) => {
     ) {
         res.status(400).json({ error: 'Missing Fields Bitch'})
     }
-    const passwordhash = await bcrypt.hash(req.body.password, 5)
+    let first_name = req.body.first_name
+    let last_name = req.body.last_name
+    let email = req.body.email
+    let password = req.body.password
 
     try {
-        const first_name = req.first_name
-        const last_name = req.last_name
-        const email = req.email
-        passwordhash
-        const sql = `INSERT INTO User(first_name, last_name, email, password) VALUES (?,?,?,?)`
-        const values = [ first_name, last_name, email, passwordhash]
-        const [rows] = await pool.query(sql, values)
-        res.json(rows)
+        const values = [email]
+        const sql = `SELECT email FROM User WHERE email=?`
+        const [result] = await pool.execute(sql, values)
+        if(result.length !== 0) {
+            res.status(400).json({ error: 'Invalid credit'})
+        } else {
+            const passwordhash = await bcrypt.hash(password, 10)
+            const sqlInsertRequest = `INSERT INTO User VALUES (NULL,?,?,?,?)`
+            const insertValues = [first_name, last_name, email, passwordhash]
+            const [result] = await pool.execute(sqlInsertRequest, insertValues)
+            if (result.affectedRows > 0) {
+                res.status(200).json({ sucess: 'Register Success'})
+                return
+            } else {
+                res.status(500).json({ error: 'Register Failed'})
+                return
+            }
+        }
     } catch (err) {
         console.log(err.stack)
+        res.status(500).json({ msg: 'Erreur serveur'})
     }
+    // try {
+    //     const first_name = req.first_name
+    //     const last_name = req.last_name
+    //     const email = req.email
+    //     passwordhash
+    //     const sql = `INSERT INTO User(first_name, last_name, email, password) VALUES (?,?,?,?)`
+    //     const values = [ first_name, last_name, email, passwordhash]
+    //     const [rows] = await pool.query(sql, values)
+    //     res.json(rows)
+    // } catch (err) {
+    //     console.log(err.stack)
+    // }
 }
 
 async function Log_User (req,res) {
