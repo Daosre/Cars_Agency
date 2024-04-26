@@ -69,4 +69,16 @@ async function Log_User (req,res) {
             res.status(200).json({ jwt: token, role: rows[0].name_role})
         }
 }
-module.exports = { Add_User, Log_User }
+
+async function All_Users (req, res) {
+    try {
+        const sql = `SELECT id, first_name, last_name FROM User`
+        const [result] = await pool.query(sql)
+        res.status(200).json({ result })
+        return
+    } catch (err) {
+        console.log(err.stack)
+        res.status(500).json({ message: "Serveur Error"})
+    }
+}
+module.exports = { Add_User, Log_User, All_Users }
