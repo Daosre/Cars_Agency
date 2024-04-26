@@ -50,7 +50,7 @@ async function Log_User (req,res) {
     }
 
         const email = req.body.email
-        const sql = `SELECT * FROM User where email=?`
+        const sql = `SELECT * FROM User JOIN role ON User.id_role = role.id_role where email=?`
         const values = [email]
         const [rows] = await pool.query(sql, values)
 
@@ -60,16 +60,13 @@ async function Log_User (req,res) {
         } else {
             const token = jwt.sign(
                 {
-                    first_name: rows[0].first_name,
-                    last_name: rows[0].last_name,
                     email: rows[0].email,
                     id: rows[0].id,
-                    gdpr: new Date(rows[0].gdpr).toLocaleDateString('fr')
                 },
                 process.env.MA_SECRETKEY,
                 { expiresIn: '10d'}
             )
-            res.status(200).json({ jwt: token})
+            res.status(200).json({ jwt: token, role: rows[0].name_role})
         }
 }
 module.exports = { Add_User, Log_User }
