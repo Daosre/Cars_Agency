@@ -3,6 +3,6 @@ const { AddCars } = require('../AddCars')
 const router = express.Router()
 
 //Cars Road
-router.post('/Cars', AddCars)
+router.post('/Add_Cars', AddCars)
 
 module.exports = router

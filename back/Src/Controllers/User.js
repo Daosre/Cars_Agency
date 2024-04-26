@@ -63,7 +63,6 @@ async function Log_User (req,res) {
                     first_name: rows[0].first_name,
                     last_name: rows[0].last_name,
                     email: rows[0].email,
-                    role: rows[0].role,
                     id: rows[0].id,
                     gdpr: new Date(rows[0].gdpr).toLocaleDateString('fr')
                 },
