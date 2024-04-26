@@ -1,5 +1,6 @@
 const { pool } = require('../Connexion/Db')
-
-async function Add_Cars (req, res) {
-    
-}
+const express = require('express')
+const path = require('path')
+const multer = require('multer')
+const app = express()
+const uploadDirectory = path.join(_dirname, 'uploads')
