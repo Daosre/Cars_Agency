@@ -1,7 +1,7 @@
 const express = require('express')
-const { AddCars } = require('../CarsController')
+const { All_Model } = require('../ModelController')
 const router = express.Router()
 
-//Cars Road
+router.get('/All', All_Model)
 
 module.exports = router
