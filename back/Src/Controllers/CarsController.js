@@ -94,13 +94,51 @@ const insertCar = async (req, res) => {
 }
 // })
 // }
- const Delete_Cars = async (req, res) => {
-        let name = req.body.name
-        const rows = `DELETE FROM Cars WHERE id = ?`
-        const values = [name]
-        const [result] = await pool.execute(rows, values)
-        console.log(result)
-        res.status(200).json({ msg: 'Deleted'})
+
+async function Update_Cars(req,res) {
+
+}
+const Delete_Cars = async (req, res) => {
+    const id = req.params.id
+    //Permet de récupéré tout ce qu'il y a dedans.
+    const {
+        name,
+        quantity,
+        description,
+        price,
+        image
+    } = req.body
+    let data = []
+    let values = []
+
+    //Vérification si la value est rempli alors change sinon laisse comme c'était.
+    if( name) {
+        data.push('name = ?')
+        values.push(name)
+    }
+    if( quantity) {
+        data.push('quantity = ?')
+        values.push(quantity)
+    }
+    if( description) {
+        data.push('description = ?')
+        values.push(description)
+    }
+    if( price) {
+        data.push('price = ?')
+        values.push(price)
+    }
+    if( image) {
+        data.push('image = ?')
+        values.push(image)
+    }
+    if(values.length > 0) {
+        values.push(id)
+        data.join(',');
+        const sql = ` UPDATE Cars SET ${data} WHERE id = ?`
+        const [result] = await pool.execute(sql, values)
+        res.json(result)
+    }
  }
  async function All_Cars(req,res) {
     try {
@@ -111,4 +149,4 @@ const insertCar = async (req, res) => {
         res.status(500).json({ msg: 'Bug Serv'})
     }
 }
-module.exports = { insertCarImage, insertCar, Delete_Cars, All_Cars }
+module.exports = { insertCarImage, insertCar, Delete_Cars, All_Cars, Update_Cars }
