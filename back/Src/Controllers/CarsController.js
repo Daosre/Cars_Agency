@@ -102,4 +102,14 @@ const insertCar = async (req, res) => {
         console.log(result)
         res.status(200).json({ msg: 'Deleted'})
  }
-module.exports = { insertCarImage, insertCar, Delete_Cars }
+
+ async function All_Cars(req,res) {
+    try {
+        const sql = ` SELECT * FROM Cars`
+        const [result] = await pool.query(sql)
+        res.status(200).json(result)
+    } catch (err) {
+        res.status(500).json({ msg: 'Bug Serv'})
+    }
+ }
+module.exports = { insertCarImage, insertCar, Delete_Cars, All_Cars }
