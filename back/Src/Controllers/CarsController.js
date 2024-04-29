@@ -59,16 +59,22 @@ const insertCar = async (req, res) => {
     !req.body.name ||
     !req.body.quantity ||
     !req.body.description ||
-    !req.body.price
-  ) {
+    !req.body.price ||
+    !req.body.image
+) {
     res.status(400).send({ error: 'Missing fields' })
   }
 
   try {
-    const sql = `INSERT INTO Cars VALUES (NULL,${parseInt(req.body.description)},"${req.body.name}",
-    "${req.body.image}",${parseInt(req.body.quantity)})`
+    let name = req.body.name
+    let quantity = req.body.quantity
+    let description = req.body.description
+    let price = req.body.price
+    let image = req.body.image
+    const sql = `INSERT INTO Cars(name, quantity, description, price, image) VALUES (?,?,?,?,?)`
+    const values = [name, quantity, description, price, image ]
     console.log(sql)
-    const [result] = await pool.query(sql)
+    const [result] = await pool.query(sql,values)
     res.status(200).json({ result })
     return
   } catch (error) {
