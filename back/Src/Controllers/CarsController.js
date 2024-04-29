@@ -114,29 +114,37 @@ const Delete_Cars = async (req, res) => {
     if( name) {
         data.push('name = ?')
         values.push(name)
+        res.status(200).json({ msg: 'name sucess'})
     }
     if( quantity) {
         data.push('quantity = ?')
         values.push(quantity)
+        res.status(200).json({ msg: 'quantity sucess'})
+
     }
     if( description) {
         data.push('description = ?')
         values.push(description)
+        res.status(200).json({ msg: 'description sucess'})
+
     }
     if( price) {
         data.push('price = ?')
         values.push(price)
+        res.status(200).json({ msg: 'price sucess'})
+
     }
     if(values.length > 0) {
         values.push(id)
         data.join(',');
         const sql = ` UPDATE Cars SET ${data} WHERE id = ?`
-        const [result] = await pool.execute(sql, values)
+        const [result] = await pool.query(sql, values)
         res.json(result)
     } else {
         res.status(500).json({ err: 'nique'})
     }
  }
+ console.log(Delete_Cars)
  async function All_Cars(req,res) {
     try {
         const sql = ` SELECT * FROM Cars`
