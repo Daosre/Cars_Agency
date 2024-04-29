@@ -9,6 +9,7 @@ require('dotenv').config()
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true,}));
+app.use(cors())
 
 app.use('/User', UserRoad)
 app.use('/Cars', CarsRoad)

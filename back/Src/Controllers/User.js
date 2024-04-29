@@ -44,30 +44,42 @@ const Add_User = async (req, res) => {
 }
 
 async function Log_User (req,res) {
-    if(!req.body.email || !req.body.password) {
+    if(!req.body.identifier || !req.body.password) {
         res.status(400).json({ error: 'Invalid Credits'})
         return
     }
+    let identifier = req.body.identifier
+    let password = req.body.password
 
-        const email = req.body.email
+    try {
+        const values = [identifier, identifier]
         const sql = `SELECT * FROM User JOIN role ON User.id_role = role.id_role where email=?`
-        const values = [email]
-        const [rows] = await pool.query(sql, values)
+        const [result] = await pool.query(sql, values)
 
-        const isValidPassword = bcrypt.compareSync(req.body.password, rows[0].password)
-        if(!isValidPassword) {
-            res.status(401).json({ error: 'Password Wrong'})
+        if(result.length === 0) {
+            res.status(401),json({ error: 'Invalid credits'})
+            return
         } else {
-            const token = jwt.sign(
-                {
-                    email: rows[0].email,
-                    id: rows[0].id,
-                },
-                process.env.MA_SECRETKEY,
-                { expiresIn: '10d'}
-            )
-            res.status(200).json({ jwt: token, role: rows[0].name_role})
-        }
+            await bcrypt.compare(password, result[0].password,
+            function (err, bcryptresult) {
+                if(err) {
+                    res.status(401).json({ erro: 'Invalid credit'})
+                    return
+                }
+                const token = jwt.sign(
+                    {
+                        email: result[0].email,
+                        id: result[0].id
+                    },
+                    process.env.MA_SECRETKEY, 
+                    { expiresIn: '20d'}
+                )
+                res.status(200).json({ jwt: token, role: result[0].name_role})
+            })
+        } 
+            }catch (err) {
+                res.status(500).json({ msg: 'Error Server'})
+            }
 }
 
 async function All_Users (req, res) {
