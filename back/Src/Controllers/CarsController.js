@@ -102,7 +102,6 @@ const insertCar = async (req, res) => {
         console.log(result)
         res.status(200).json({ msg: 'Deleted'})
  }
-
  async function All_Cars(req,res) {
     try {
         const sql = ` SELECT * FROM Cars`
@@ -111,5 +110,5 @@ const insertCar = async (req, res) => {
     } catch (err) {
         res.status(500).json({ msg: 'Bug Serv'})
     }
- }
+}
 module.exports = { insertCarImage, insertCar, Delete_Cars, All_Cars }
