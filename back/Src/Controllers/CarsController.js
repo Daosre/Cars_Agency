@@ -96,42 +96,35 @@ const insertCar = async (req, res) => {
 // }
 
 async function Update_Cars(req,res) {
-
-}
-const Delete_Cars = async (req, res) => {
     const id = req.params.id
     //Permet de récupéré tout ce qu'il y a dedans.
     const {
         name,
         quantity,
         description,
-        price
+        price,
     } = req.body
     let data = []
     let values = []
 
     //Vérification si la value est rempli alors change sinon laisse comme c'était.
-    if( name) {
+    if(name) {
         data.push('name = ?')
         values.push(name)
-        res.status(200).json({ msg: 'name sucess'})
     }
-    if( quantity) {
+    if(quantity) {
         data.push('quantity = ?')
         values.push(quantity)
-        res.status(200).json({ msg: 'quantity sucess'})
 
     }
-    if( description) {
+    if(description) {
         data.push('description = ?')
         values.push(description)
-        res.status(200).json({ msg: 'description sucess'})
 
     }
-    if( price) {
+    if(price) {
         data.push('price = ?')
         values.push(price)
-        res.status(200).json({ msg: 'price sucess'})
 
     }
     if(values.length > 0) {
@@ -143,8 +136,16 @@ const Delete_Cars = async (req, res) => {
     } else {
         res.status(500).json({ err: 'nique'})
     }
+}
+const Delete_Cars = async (req, res) => {
+        let name = req.body.name
+        const rows = `DELETE FROM Cars WHERE id = ?`
+        const values = [name]
+        const [result] = await pool.execute(rows, values)
+        console.log(result)
+        res.status(200).json({ msg: 'Deleted'})
  }
- console.log(Delete_Cars)
+
  async function All_Cars(req,res) {
     try {
         const sql = ` SELECT * FROM Cars`
