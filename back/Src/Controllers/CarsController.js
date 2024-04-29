@@ -2,8 +2,10 @@ const { pool } = require('../Connexion/Db')
 const express = require('express')
 const path = require('path')
 const multer = require('multer')
+const { toktok } = require('./Utils/token')
 const app = express()
 const uploadDirectory = path.join(__dirname, 'uploads')
+const jwt = require('jsonwebtoken')
 
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
@@ -55,6 +57,13 @@ const insertCarImage = async (req, res) => {
 }
 
 const insertCar = async (req, res) => {
+    const token = await toktok(req)
+    jwt.verify( token,process.env.MA_SECRETKEY,
+    async (err, authData) => {
+        if(err) {
+            res.status(401).json({ err: 'Unauthorized'})
+            return
+        } else {
   if (
     !req.body.name ||
     !req.body.quantity ||
@@ -82,5 +91,9 @@ const insertCar = async (req, res) => {
     res.status(500).json({ message: 'Erreur serveur' })
   }
 }
+})
+}
+ async function Delete_Cars () {
 
+ }
 module.exports = { insertCarImage, insertCar }
