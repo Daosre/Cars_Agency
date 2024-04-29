@@ -105,8 +105,7 @@ const Delete_Cars = async (req, res) => {
         name,
         quantity,
         description,
-        price,
-        image
+        price
     } = req.body
     let data = []
     let values = []
@@ -128,16 +127,14 @@ const Delete_Cars = async (req, res) => {
         data.push('price = ?')
         values.push(price)
     }
-    if( image) {
-        data.push('image = ?')
-        values.push(image)
-    }
     if(values.length > 0) {
         values.push(id)
         data.join(',');
         const sql = ` UPDATE Cars SET ${data} WHERE id = ?`
         const [result] = await pool.execute(sql, values)
         res.json(result)
+    } else {
+        res.status(500).json({ err: 'nique'})
     }
  }
  async function All_Cars(req,res) {
