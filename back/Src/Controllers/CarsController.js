@@ -57,14 +57,14 @@ const insertCarImage = async (req, res) => {
 }
 
 const insertCar = async (req, res) => {
-    // const token = await extracToken(req)
-    // jwt.verify( token,
-    //     process.env.MA_SECRET_KEY,
-    // async (err, authData) => {
-    //     if(err) {
-    //         res.status(401).json({ err: 'Unauthorized'})
-    //         return
-    //     } else {
+    const token = await extracToken(req)
+    jwt.verify( token,
+        process.env.MA_SECRET_KEY,
+    async (err, authData) => {
+        if(err) {
+            res.status(401).json({ err: 'Unauthorized'})
+            return
+        } else {
   if (
     !req.body.name ||
     !req.body.quantity ||
@@ -92,10 +92,17 @@ const insertCar = async (req, res) => {
     res.status(500).json({ message: 'Erreur serveur' })
   }
 }
-// })
-// }
-
+})
+}
 async function Update_Cars(req,res) {
+    const token = await extracToken(req)
+    jwt.verify( token,
+        process.env.MA_SECRET_KEY,
+    async (err, authData) => {
+        if(err) {
+            res.status(401).json({ err: 'Unauthorized'})
+            return
+        } else {
     const id = req.params.id
     //Permet de récupéré tout ce qu'il y a dedans.
     const {
@@ -125,7 +132,6 @@ async function Update_Cars(req,res) {
     if(price) {
         data.push('price = ?')
         values.push(price)
-
     }
     if(values.length > 0) {
         values.push(id)
@@ -136,6 +142,7 @@ async function Update_Cars(req,res) {
     } else {
         res.status(500).json({ err: 'nique'})
     }
+}})
 }
 const Delete_Cars = async (req, res) => {
         let name = req.body.name

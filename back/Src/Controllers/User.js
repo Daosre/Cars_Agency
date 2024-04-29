@@ -71,7 +71,7 @@ async function Log_User (req,res) {
                         email: result[0].email,
                         id: result[0].id
                     },
-                    process.env.MA_SECRETKEY, 
+                    process.env.MA_SECRET_KEY, 
                     { expiresIn: '20d'}
                 )
                 res.status(200).json({ jwt: token, role: result[0].name_role})
