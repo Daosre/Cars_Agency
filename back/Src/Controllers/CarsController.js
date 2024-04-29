@@ -96,7 +96,7 @@ const insertCar = async (req, res) => {
 // }
  const Delete_Cars = async (req, res) => {
         let name = req.body.name
-        const rows = `DELETE FROM Cars WHERE cars_name = ?`
+        const rows = `DELETE FROM Cars WHERE id = ?`
         const values = [name]
         const [result] = await pool.execute(rows, values)
         console.log(result)
