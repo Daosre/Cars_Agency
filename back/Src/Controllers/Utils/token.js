@@ -1,4 +1,4 @@
-async function toktok(req) {
+async function extracToken(req) {
     const headerWithToken = req.headers.authorization
     // " !== " strictement différent
     if (typeof headerWithToken !== undefined || !headerWithToken) {
@@ -7,4 +7,4 @@ async function toktok(req) {
         return token
     }
 }
-module.exports = { toktok }
+module.exports = { extracToken }

@@ -2,7 +2,7 @@ const { pool } = require('../Connexion/Db')
 const express = require('express')
 const path = require('path')
 const multer = require('multer')
-const { toktok } = require('./Utils/token')
+const { extracToken } = require('./Utils/token')
 const app = express()
 const uploadDirectory = path.join(__dirname, 'uploads')
 const jwt = require('jsonwebtoken')
@@ -57,13 +57,14 @@ const insertCarImage = async (req, res) => {
 }
 
 const insertCar = async (req, res) => {
-    const token = await toktok(req)
-    jwt.verify( token,process.env.MA_SECRETKEY,
-    async (err, authData) => {
-        if(err) {
-            res.status(401).json({ err: 'Unauthorized'})
-            return
-        } else {
+    // const token = await extracToken(req)
+    // jwt.verify( token,
+    //     process.env.MA_SECRET_KEY,
+    // async (err, authData) => {
+    //     if(err) {
+    //         res.status(401).json({ err: 'Unauthorized'})
+    //         return
+    //     } else {
   if (
     !req.body.name ||
     !req.body.quantity ||
@@ -91,9 +92,14 @@ const insertCar = async (req, res) => {
     res.status(500).json({ message: 'Erreur serveur' })
   }
 }
-})
-}
- async function Delete_Cars () {
-
+// })
+// }
+ const Delete_Cars = async (req, res) => {
+        let name = req.body.name
+        const rows = `DELETE FROM Cars WHERE cars_name = ?`
+        const values = [name]
+        const [result] = await pool.execute(rows, values)
+        console.log(result)
+        res.status(200).json({ msg: 'Deleted'})
  }
-module.exports = { insertCarImage, insertCar }
+module.exports = { insertCarImage, insertCar, Delete_Cars }
