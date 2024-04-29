@@ -91,8 +91,7 @@ const insertCar = async (req, res) => {
     console.log(error.stack)
     res.status(500).json({ message: 'Erreur serveur' })
   }
-}
-})
+}})
 }
 async function Update_Cars(req,res) {
     const token = await extracToken(req)
@@ -145,13 +144,23 @@ async function Update_Cars(req,res) {
 }})
 }
 const Delete_Cars = async (req, res) => {
+    const token = await extracToken(req)
+    jwt.verify( token,
+        process.env.MA_SECRET_KEY,
+    async (err, authData) => {
+        if(err) {
+            res.status(401).json({ err: 'Unauthorized'})
+            return
+        } else {
+
         let name = req.body.name
         const rows = `DELETE FROM Cars WHERE id = ?`
         const values = [name]
         const [result] = await pool.execute(rows, values)
         console.log(result)
         res.status(200).json({ msg: 'Deleted'})
- }
+ }})
+}
 
  async function All_Cars(req,res) {
     try {
