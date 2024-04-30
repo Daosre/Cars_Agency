@@ -3,7 +3,7 @@ async function Login() {
     let password = document.querySelector('.password').value
 
     let user = {
-        email: email,
+        identifier: email,
         password: password
     }
 
@@ -21,11 +21,11 @@ async function Login() {
     if (response.status === 200) {
         let jwt = data.jwt
         let role = data.role
-        window.localStorage.setItem('jwt, jwt')
-        if (role === 'admin') {
-            window.location.href = './Admin.html'
+        window.localStorage.setItem('jwt', jwt)
+        if (role === 'Admin') {
+            window.location.href = '../Admin/Admin.html'
         } else {
-            window.location.href = './User.html'
+            window.location.href = '../User/User.html'
         }
     } else {
         alert('Wrong Id')
