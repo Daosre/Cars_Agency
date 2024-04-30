@@ -1,4 +1,4 @@
-async function hanleregister() {
+async function Register() {
     const first_name = document.querySelector('.name').value
     const last_name = document.querySelector('.last_name').value
     const email = document.querySelector('.email').value
