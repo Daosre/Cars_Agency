@@ -23,7 +23,10 @@ async function Register() {
     let response = await apiRequest
     console.log(response)
     if (response.status === 200) {
-        alert('Register Sucessfull')
+        setTimeout(() => {
+            alert('Register Sucessfull')
+            window.location.href = './LogIn.html'
+        }, 2000);
     } else {
         alert('Wrong id')
     }
