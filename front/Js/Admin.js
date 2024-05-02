@@ -9,17 +9,16 @@ let logout = document.querySelector('.Logout')
         }, 1000);
     })
 
-    async function All_Cars () {
+    async function All_Cars() {
 
-        let response = fetch('http://localhost:3108/Cars/All_Cars')
+        let response = await fetch('http://localhost:3108/Cars/All_Cars')
         let client = await response.json()
         
-        let stock = doucment.querySelector('.main-container')
+        let stock = document.querySelector('.main-container')
         let localUser = localStorage.getItem('jwt')
 
         for (const Cars of client) {
             let newCars = document.querySelector('div')
-            newCars.classList.add('Event')
             newCars.innerHTML = `<h2 class="name">${Cars.name}</h2>
             <img src="${Cars.image}" class="img" />
             <p class="quantity">${Cars.quantity}</p>
@@ -28,5 +27,4 @@ let logout = document.querySelector('.Logout')
             stock.appendChild(newCars)
         }
     }
-
-    All_Cars()
+All_Cars()
