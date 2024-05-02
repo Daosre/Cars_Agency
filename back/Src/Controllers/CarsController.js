@@ -154,7 +154,7 @@ const Delete_Cars = async (req, res) => {
         } else {
 
         let name = req.body.name
-        const rows = `DELETE FROM Cars WHERE id = ?`
+        const rows = `DELETE FROM Cars WHERE name = ?`
         const values = [name]
         const [result] = await pool.execute(rows, values)
         console.log(result)
