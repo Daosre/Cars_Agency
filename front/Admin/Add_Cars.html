@@ -4,16 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AddEvent</title>
+    <link rel="stylesheet" href="../Css/Add_Cars.css">
 </head>
 <body>
     <header class="header-container">
-        <ol>
-            <li>Lorem, ipsum dolor.</li>
-            <li>Lorem, ipsum dolor.</li>
-            <li>Lorem, ipsum dolor.</li>
-        </ol>
-    </header>
+        <a href="../Admin/Admin.html" class="raynor"><img src="../media/Cars Agency.png" alt="Cars Agency Log" class="logo"></a>
+            <button class="Logout">Log Out</button>
+</header>
     <main class="main-container">
+        <div class="formulaire">
         <label for="Title">Name</label>
         <input type="text" class="name">
             <label for="Description">Description</label>
@@ -21,11 +20,12 @@
         <label for="image">Image</label>
         <input type="url" placeholder="URL Only" class="image">
             <label for="Price">Price</label>
-            <input type="text" class="price">
+            <input type="number" class="price">
             <label for="Stock">Stock</label>
             <input type="number" class="quantity">
         <button class="addCars">Add Cars</button>
         <span class="succes"></span>
+    </div>
     </main>
     <footer class="footer-container">
         <ul>
