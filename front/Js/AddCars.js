@@ -1,6 +1,6 @@
+let addCars = document.querySelector('.addCars')
 
 async function Add_Cars() {
-    let addCars = document.querySelector('.addCars')
     let name = document.querySelector('.name').value
     let description = document.querySelector('.description').value
     let image = document.querySelector('.image').value
@@ -30,11 +30,12 @@ async function Add_Cars() {
     let client = await response.json()
     if(client.status === 200) {
         sucess.innerHTML = 'Sucess Create'
-        setTimeout(() => {
-            window.location.href = '../Admin/Admin.html'
-        }, 1000);
-    }
-    addCars.addEventListener('click', () => {
-        Add_Cars()
-    })
+        
+    }  
 }
+addCars.addEventListener('click', () => {
+    Add_Cars()
+    setTimeout(() => {
+        window.location.href = '../Admin/Admin.html'
+    }, 1000);
+})
