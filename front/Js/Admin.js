@@ -29,7 +29,6 @@ logout.addEventListener('click', () => {
 
 }
 async function delete_Cars() {
-    console.log("played");
     let jwt = window.localStorage.getItem('jwt')
     let name = document.querySelector(".namesupp").value
     let data = {
@@ -59,6 +58,8 @@ supr.addEventListener('click', () => {
 delete_Cars()
 })
 })
+
+
 
 
 
