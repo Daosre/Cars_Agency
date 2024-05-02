@@ -1,5 +1,6 @@
 let logout = document.querySelector('.Logout');
 let button = document.querySelector('.delete');
+let update = document.querySelector('.update');
 
 logout.addEventListener('click', () => {
         alert('Disconnected')
@@ -9,7 +10,7 @@ logout.addEventListener('click', () => {
         }, 1000);
     })
 
-    async function All_Cars() {
+async function All_Cars() {
 
         let response = await fetch('http://localhost:3108/Cars/All_Cars')
         let client = await response.json()
@@ -18,12 +19,12 @@ logout.addEventListener('click', () => {
 
         for (const Cars of client) {
             let newCars = document.querySelector('div')
-            newCars.classList.add = ('.Event')
-            newCars.innerHTML += `<h2 class="name">${Cars.name}</h2>
+            newCars.classList.add('car-container')
+            newCars.innerHTML += `<div class="location"><h2 class="name">${Cars.name}</h2>
             <img src="${Cars.image}" class="img" />
-            <p class="quantity">${Cars.quantity}</p>
-            <p class="description">${Cars.description}</p>
-            <p class="price">${Cars.price}</p>`
+            <p class="quantity">Quantity: ${Cars.quantity}</p>
+            <p class="description">Description: ${Cars.description}</p>
+            <p class="price">Price: ${Cars.price}€</p></div>`
             stock.appendChild(newCars)
     }
 
@@ -46,6 +47,16 @@ async function delete_Cars() {
       window.location.reload()
 }
 
+update.addEventListener('click', () => {
+    let updatename = document.querySelector('.updatecar')
+    updatename.innerHTML = 
+    `<input type="text" class="upname" placeholder="Update Name">
+    <input type="text" class="updescription" placeholder="Update Description">
+    <input type="url" class="upimage" placeholder="Update Image">
+    <input type="number" class="upprice" placeholder="Update price">
+    <input type="text" class="quantity" placeholder="Update quantity">`
+})
+
 button.addEventListener('click', () => {
     let namedelete = document.querySelector('.namedelete')
     namedelete.innerHTML = `<input type="text" class="namesupp" placeholder="Name a Car for Delete">
@@ -58,6 +69,8 @@ supr.addEventListener('click', () => {
 delete_Cars()
 })
 })
+
+
 
 
 
