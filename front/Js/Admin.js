@@ -19,7 +19,8 @@ let logout = document.querySelector('.Logout')
 
         for (const Cars of client) {
             let newCars = document.querySelector('div')
-            newCars.innerHTML = `<h2 class="name">${Cars.name}</h2>
+            newCars.classList.add = ('.Event')
+            newCars.innerHTML += `<h2 class="name">${Cars.name}</h2>
             <img src="${Cars.image}" class="img" />
             <p class="quantity">${Cars.quantity}</p>
             <p class="description">${Cars.description}</p>
