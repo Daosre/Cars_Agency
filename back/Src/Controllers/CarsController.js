@@ -137,7 +137,7 @@ async function Update_Cars(req,res) {
         data.join(',');
         const sql = ` UPDATE Cars SET ${data} WHERE id = ?`
         const [result] = await pool.query(sql, values)
-        res.json(result)
+        res.status(200).json(result)
     } else {
         res.status(500).json({ err: 'nique'})
     }
@@ -171,4 +171,26 @@ const Delete_Cars = async (req, res) => {
         res.status(500).json({ msg: 'Bug Serv'})
     }
 }
-module.exports = { insertCarImage, insertCar, Delete_Cars, All_Cars, Update_Cars }
+
+const ctrlSearchByName = async(req, res)=>{
+  const title=req.params.name
+  try{
+    
+    const sql =`SELECT * FROM Cars WHERE name LIKE '%${title}%' `
+   
+    const [rows] = await pool.execute(sql);
+    res.json(rows)
+  }catch(err){
+    console.log(err)
+  }
+}
+
+
+
+
+
+
+
+
+
+module.exports = { insertCarImage, insertCar, Delete_Cars, All_Cars, Update_Cars, ctrlSearchByName }

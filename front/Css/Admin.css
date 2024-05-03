@@ -34,12 +34,12 @@ button {
 }
 .car-container {
     background-color: black;
+    width: 100%;
     color: white;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     background-image: url('https://wallpapercave.com/wp/wp6543251.jpg');
-    background-position: 50%;
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -48,7 +48,7 @@ button {
     background-color: rgba(0, 0, 0, 0.829);
     width: 30%;
     aspect-ratio: 1;
-    margin: 80px;
+    margin: 50px 20px 50px 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
